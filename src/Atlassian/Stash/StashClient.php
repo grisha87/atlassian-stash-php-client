@@ -2,62 +2,215 @@
 
 namespace Atlassian\Stash;
 
-use Atlassian\Stash\Api as api;
+use Atlassian\ApiClient;
+use Atlassian\Stash\Api\Branch;
+use Atlassian\Stash\Api\Mapper\BranchMapper;
+use Atlassian\Stash\Api\Mapper\ProjectMapper;
+use Atlassian\Stash\Api\Mapper\PullRequestMapper;
+use Atlassian\Stash\Api\Mapper\RepoMapper;
+use Atlassian\Stash\Api\Project;
+use Atlassian\Stash\Api\PullRequest;
+use Atlassian\Stash\Api\Repo;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
+use Atlassian\Stash\Api\Request;
 
-class StashClient
+/**
+ * The BitBucket Server (Stash) Client
+ *
+ * @see https://developer.atlassian.com/stash/docs/latest/reference/rest-api.html
+ */
+class StashClient extends ApiClient
 {
-    private $httpClient;
+    protected $basicUri = 'rest/api/1.0';
 
-    public function __construct($url, $user = null, $pass = null)
+    /**
+     * @return array|Project[] The list of available projects
+     */
+    public function getProjects(): array
     {
-        $params             = [];
-        $params['base_url'] = $url;
+        $request = new Request(
+            Request::METHOD_GET,
+            $this->buildUri('projects')
+        );
 
-        if ($user && $pass) {
-            $params['defaults'] = ['auth' => [$user, $pass]];
+        $response = $this->sendRequest($request);
+
+        return (new ProjectMapper())->allFromPhpData($response->getPayload()['values']);
+    }
+
+    // @ToDo - Make a test...
+    public function createProject(string $key, string $name, string $description = '', string $avatarBase64 = '')
+    {
+        $opts    = [
+            'key'  => $key,
+            'name' => $name,
+        ];
+
+        if ($description) {
+            $opts['description'] = $description;
         }
 
-        $this->httpClient = new Client($params);
-    }
-
-    public function getHttpClient()
-    {
-        return $this->httpClient;
-    }
-
-    public function getProjects()
-    {
-        $encRepos = $this->httpClient->get('/rest/api/1.0/projects?limit=1000')
-                                     ->json();
-
-        return (new api\ProjectApiMapper)->getAllFromEncoded(isset($encRepos['values']) ? $encRepos['values'] : []);
-    }
-
-    public function getRepos($projectKey)
-    {
-        $encRepos = $this->httpClient->get(sprintf('/rest/api/1.0/projects/%s/repos?limit=1000', $projectKey))
-                                     ->json();
-
-        return (new api\RepoApiMapper)->getAllFromEncoded(isset($encRepos['values']) ? $encRepos['values'] : []);
-    }
-
-    public function getRepoFileContents(api\Repo $repo, $file)
-    {
-        $url = sprintf('/rest/api/1.0/projects/%s/repos/%s/browse/%s', $repo->getProjectKey(), $repo->getName(), ltrim($file, '/'));
-
-        $contents = '';
-
-        try {
-            $resp = $this->httpClient->get($url)->json();
-            foreach ($resp['lines'] as $line) {
-                $contents .= $line['text'];
-            }
-        } catch (ClientException $e) {
+        if ($avatarBase64) {
+            $opts['avatar'] = $avatarBase64;
         }
 
-        return $contents;
+        $request = new Request(
+            Request::METHOD_POST,
+            $this->buildUri('projects'),
+            $opts
+        );
+
+        $response = $this->sendRequest($request);
+
+        return (new ProjectMapper())->fromPhpData($response->getPayload());
+    }
+
+    public function createRepository(string $projectKey, array $params)
+    {
+        $request = new Request(
+            Request::METHOD_POST,
+            $this->buildUri(sprintf('projects/%s/repos', $projectKey)),
+            $params
+        );
+
+        $response = $this->sendRequest($request);
+
+        return (new RepoMapper())->fromPhpData($response->getPayload());
+    }
+
+    public function deleteRepository(string $projectKey, string $repoSlug)
+    {
+        $request = new Request(
+            Request::METHOD_DELETE,
+            $this->buildUri(sprintf('projects/%s/repos/%s', $projectKey, $repoSlug))
+        );
+
+         return $this->sendRequest($request)->getStatusCode() === 204;
+    }
+
+    /**
+     * @param string $projectKey
+     *
+     * @return array|Repo[]
+     */
+    public function getProjectRepositories(string $projectKey): array
+    {
+        $uri = sprintf($this->buildUri('projects/%s/repos'), $projectKey);
+
+        $request = new Request(
+            Request::METHOD_GET,
+            $uri
+        );
+
+        $response = $this->sendRequest($request);
+
+        return (new RepoMapper())->allFromPhpData($response->getPayload()['values']);
+    }
+
+    /**
+     * @param string $projectKey
+     * @param string    $repoSlug
+     *
+     * @return Branch[]
+     */
+    public function getProjectRepositoryBranches(string $projectKey, string $repoSlug)
+    {
+        $uri = sprintf(
+            $this->buildUri('projects/%s/repos/%s/branches'),
+            $projectKey,
+            $repoSlug
+        );
+
+        $request = new Request(
+            Request::METHOD_GET,
+            $uri
+        );
+
+        $response = $this->sendRequest($request);
+
+        return (new BranchMapper())->allFromPhpData($response->getPayload()['values']);
+    }
+
+    /**
+     * @param        $projectKey
+     * @param        $repoSlug
+     * @param string $direction
+     * @param null   $at
+     * @param null   $state
+     * @param null   $order
+     * @param bool   $withAttributes
+     * @param bool   $withProperties
+     *
+     * @return PullRequest[]
+     */
+    public function getProjectRepositoryPullRequests(
+        string $projectKey,
+        string $repoSlug,
+        string $direction = PullRequest::DIRECTION_INCOMING,
+        $at = null,
+        $state = null,
+        $order = null,
+        $withAttributes = true,
+        $withProperties = true
+    ) {
+        $uri = sprintf(
+            $this->buildUri('projects/%s/repos/%s/pull-requests'),
+            $projectKey, $repoSlug
+        );
+
+        $request = new Request(
+            Request::METHOD_GET,
+            $uri,
+            [
+                'direction'      => $direction,
+                'at'             => $at,
+                'state'          => $state,
+                'order'          => $order,
+                'withAttributes' => $withAttributes,
+                'withProperties' => $withProperties,
+            ]
+        );
+
+        $response = $this->sendRequest($request);
+
+        return (new PullRequestMapper())->allFromPhpData($response->getPayload()['values']);
+    }
+
+    public function getProjectRepositoryCompareCommits(
+        string $projectKey,
+        string $repoSlug,
+        string $fromRef = null,
+        string $toRef = null,
+        string $fromRepo = null
+    ) {
+        $uri = sprintf(
+            $this->buildUri('projects/%s/repos/%s/compare/commits'),
+            $projectKey, $repoSlug
+        );
+
+        $request = new Request(
+            Request::METHOD_GET,
+            $uri,
+            [
+                'from'     => $fromRef,
+                'to'       => $toRef,
+                'fromRepo' => $fromRepo,
+                'limit'    => 1000,
+            ]
+        );
+
+        $page = $this->sendRequest($request);
+
+        return $page;
+    }
+
+    /**
+     * @param string $rest
+     *
+     * @return string
+     */
+    protected function buildUri(string $rest): string
+    {
+        return "$this->basicUri/$rest";
     }
 }

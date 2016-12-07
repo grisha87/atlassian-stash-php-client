@@ -2,50 +2,134 @@
 
 namespace Atlassian\Stash\Api;
 
-class Repo
+/**
+ * Stash API repository representation
+ */
+class Repo extends EntityAbstract
 {
-    private $name;
+    /** @var int */
+    protected $id;
 
-    private $cloneUrl;
+    /** @var string */
+    protected $name;
 
-    private $projectKey;
+    /** @var string */
+    protected $scmId;
 
+    /** @var string */
+    protected $state;
+
+    /** @var string */
+    protected $statusMessage;
+
+    /** @var bool */
+    protected $forkable;
+
+    /** @var Project */
+    protected $project;
+
+    /** @var bool */
+    protected $public;
+
+    /** @var string */
+    protected $slug;
+
+    /** @inheritdoc */
+    public function __construct(array $data)
+    {
+        parent::__construct($data);
+
+        $this->mapDataKeysToProperties([
+            'id',
+            'slug',
+            'name',
+            'scmId',
+            'state',
+            'statusMessage',
+            'forkable',
+            'public',
+        ]);
+
+        $this->buildProject();
+        $this->buildLinks();
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
-    public function getCloneUrl()
+    /**
+     * @return string
+     */
+    public function getScmId()
     {
-        return $this->cloneUrl;
+        return $this->scmId;
     }
 
-    public function getProjectKey()
+    /**
+     * @return string
+     */
+    public function getState()
     {
-        return $this->projectKey;
+        return $this->state;
     }
 
-    public function setName($name)
+    /**
+     * @return string
+     */
+    public function getStatusMessage()
     {
-        $this->name = $name;
-
-        return $this;
+        return $this->statusMessage;
     }
 
-    public function setCloneUrl($cloneUrl)
+    /**
+     * @return boolean
+     */
+    public function isForkable()
     {
-        // clean up url
-        $parts = parse_url($cloneUrl);
-
-        $this->cloneUrl = $parts['scheme'] . '://' . $parts['host'] . $parts['path'];
-
-        return $this;
+        return $this->forkable;
     }
 
-    public function setProjectKey($projectKey)
+    /**
+     * @return Project
+     */
+    public function getProject()
     {
-        $this->projectKey = $projectKey;
+        return $this->project;
+    }
 
-        return $this;
+    /**
+     * @return boolean
+     */
+    public function isPublic()
+    {
+        return $this->public;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    protected function buildProject()
+    {
+        $project = $this->extractValue('project');
+
+        $this->project = new Project($project);
     }
 }
