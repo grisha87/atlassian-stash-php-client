@@ -7,9 +7,9 @@ PHP Client for Atlassian Stash (Bitbucket v1)
 ###Install With Composer
 ```
 {
-	"require" : {
-		"atlassian/stash-client" : "1.*"
-	}
+    "require" : {
+        "atlassian/stash-client" : "1.*"
+    }
 }
 ```
 
