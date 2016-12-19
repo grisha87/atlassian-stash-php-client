@@ -31,7 +31,7 @@ class Branch extends EntityAbstract
             'latestCommit',
             'latestChangeset',
             'isDefault'
-       ]);
+        ]);
     }
 
     /**

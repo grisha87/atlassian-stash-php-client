@@ -155,7 +155,8 @@ class StashClient extends ApiClient
     ) {
         $uri = sprintf(
             $this->buildUri('projects/%s/repos/%s/pull-requests'),
-            $projectKey, $repoSlug
+            $projectKey,
+            $repoSlug
         );
 
         $request = new Request(
@@ -185,7 +186,8 @@ class StashClient extends ApiClient
     ) {
         $uri = sprintf(
             $this->buildUri('projects/%s/repos/%s/compare/commits'),
-            $projectKey, $repoSlug
+            $projectKey,
+            $repoSlug
         );
 
         $request = new Request(

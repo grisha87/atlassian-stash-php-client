@@ -15,5 +15,5 @@ abstract class MapperAbstract
         return $ret;
     }
 
-    public abstract function fromPhpData(array $data);
+    abstract public function fromPhpData(array $data);
 }

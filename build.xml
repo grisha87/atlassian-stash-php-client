@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Atlassian PHP Connector" default="quality">
+    <target name="quality">
+        <phingcall target="quality-php-code-sniffer" />
+        <phingcall target="quality-unit-test" />
+        <!-- <phingcall target="quality-php-mess-detection" /> -->
+    </target>
+
+    <target name="quality-php-code-sniffer">
+        <exec executable="vendor/bin/phpcs" passthru="true" checkreturn="true">
+            <arg line="--standard=PSR2 src/" />
+        </exec>
+    </target>
+
+    <target name="quality-unit-test">
+        <exec executable="vendor/bin/phpunit" passthru="true" checkreturn="true">
+            <arg line="test/" />
+        </exec>
+    </target>
+
+    <target name="quality-php-mess-detection">
+        <exec executable="vendor/bin/phpmd" passthru="true" checkreturn="true">
+            <arg line="src/ text cleancode,codesize,controversial,design,naming,unusedcode" />
+        </exec>
+    </target>
+</project>
