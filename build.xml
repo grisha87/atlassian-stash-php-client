@@ -2,8 +2,8 @@
 <project name="Atlassian PHP Connector" default="quality">
     <target name="quality">
         <phingcall target="quality-php-code-sniffer" />
-        <phingcall target="quality-unit-test" />
-        <!-- <phingcall target="quality-php-mess-detection" /> -->
+        <!--<phingcall target="quality-unit-test" />-->
+        <phingcall target="quality-php-mess-detection" />
     </target>
 
     <target name="quality-php-code-sniffer">
@@ -20,7 +20,7 @@
 
     <target name="quality-php-mess-detection">
         <exec executable="vendor/bin/phpmd" passthru="true" checkreturn="true">
-            <arg line="src/ text cleancode,codesize,controversial,design,naming,unusedcode" />
+            <arg line="src/ text phpmd.xml" />
         </exec>
     </target>
 </project>

@@ -132,26 +132,16 @@ class StashClient extends ApiClient
     }
 
     /**
-     * @param        $projectKey
-     * @param        $repoSlug
-     * @param string $direction
-     * @param null   $at
-     * @param null   $state
-     * @param null   $order
-     * @param bool   $withAttributes
-     * @param bool   $withProperties
+     * @param string $projectKey
+     * @param string $repoSlug
+     * @param array  $options The options to pass for the request
      *
-     * @return PullRequest[]
+     * @return PullRequest[] The list of found pull requests
      */
     public function getProjectRepositoryPullRequests(
         string $projectKey,
         string $repoSlug,
-        string $direction = PullRequest::DIRECTION_INCOMING,
-        $at = null,
-        $state = null,
-        $order = null,
-        $withAttributes = true,
-        $withProperties = true
+        array $options = []
     ) {
         $uri = sprintf(
             $this->buildUri('projects/%s/repos/%s/pull-requests'),
@@ -162,14 +152,7 @@ class StashClient extends ApiClient
         $request = new Request(
             Request::METHOD_GET,
             $uri,
-            [
-                'direction'      => $direction,
-                'at'             => $at,
-                'state'          => $state,
-                'order'          => $order,
-                'withAttributes' => $withAttributes,
-                'withProperties' => $withProperties,
-            ]
+            $options
         );
 
         $response = $this->sendRequest($request);
