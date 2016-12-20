@@ -13,7 +13,7 @@ class ResultPageMapper
      */
     public function mapFromPhpArray(array $data)
     {
-        $inst = new ResultPage();
+        $inst = new ResultPage($data);
 
         $inst->setSize($data['size']);
         $inst->setStart($data['start']);

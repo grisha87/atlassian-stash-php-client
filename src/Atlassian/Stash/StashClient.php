@@ -3,14 +3,14 @@
 namespace Atlassian\Stash;
 
 use Atlassian\ApiClient;
-use Atlassian\Stash\Api\Branch;
+use Atlassian\Stash\Api\Entity\Branch;
 use Atlassian\Stash\Api\Mapper\BranchMapper;
 use Atlassian\Stash\Api\Mapper\ProjectMapper;
 use Atlassian\Stash\Api\Mapper\PullRequestMapper;
 use Atlassian\Stash\Api\Mapper\RepoMapper;
-use Atlassian\Stash\Api\Project;
-use Atlassian\Stash\Api\PullRequest;
-use Atlassian\Stash\Api\Repo;
+use Atlassian\Stash\Api\Entity\Project;
+use Atlassian\Stash\Api\Entity\PullRequest;
+use Atlassian\Stash\Api\Entity\Repo;
 
 use Atlassian\Stash\Api\Request;
 
@@ -111,7 +111,7 @@ class StashClient extends ApiClient
      * @param string $projectKey
      * @param string    $repoSlug
      *
-     * @return Branch[]
+     * @return \Atlassian\Stash\Api\Entity\Branch[]
      */
     public function getProjectRepositoryBranches(string $projectKey, string $repoSlug)
     {
@@ -136,7 +136,7 @@ class StashClient extends ApiClient
      * @param string $repoSlug
      * @param array  $options The options to pass for the request
      *
-     * @return PullRequest[] The list of found pull requests
+     * @return \Atlassian\Stash\Api\Entity\PullRequest[] The list of found pull requests
      */
     public function getProjectRepositoryPullRequests(
         string $projectKey,

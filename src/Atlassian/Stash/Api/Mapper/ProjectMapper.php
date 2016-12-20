@@ -2,7 +2,7 @@
 
 namespace Atlassian\Stash\Api\Mapper;
 
-use Atlassian\Stash\Api\Project;
+use Atlassian\Stash\Api\Entity\Project;
 
 class ProjectMapper extends MapperAbstract
 {

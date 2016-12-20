@@ -21,10 +21,10 @@ use Atlassian\Stash\StashClient;
 // Init client, user/pass is optional
 $stash = new StashClient('http://git.example.com', 'user', 'password');
 
-// returns array of Atlassian\Stash\Api\Project
+Atlassian\Stash\Api\Entity\ProjectProject
 $projects = $stash->getProjects();
 
-// returns array of Atlassian\Stash\Api\Repo
+Atlassian\Stash\Api\Entity\Repoty\Repo
 $repos = $stash->getProjectRepositories('test'); // By Project Key
 
 // returns contents of file as a string

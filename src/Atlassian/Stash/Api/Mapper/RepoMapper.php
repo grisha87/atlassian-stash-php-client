@@ -2,7 +2,7 @@
 
 namespace Atlassian\Stash\Api\Mapper;
 
-use Atlassian\Stash\Api\Repo;
+use Atlassian\Stash\Api\Entity\Repo;
 
 class RepoMapper extends MapperAbstract
 {

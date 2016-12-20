@@ -3,7 +3,7 @@
 namespace Atlassian;
 
 use Atlassian\Stash\Api\Mapper\ResultPageMapper;
-use Atlassian\Stash\Api\RequestFailedException;
+use Atlassian\Stash\Api\Exception\RequestFailedException;
 use Atlassian\Stash\Api\Response;
 use Atlassian\Stash\Api\ResultPage;
 use Atlassian\Stash\Api\Request;

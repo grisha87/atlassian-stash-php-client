@@ -31,7 +31,7 @@ class ResultPage
     /**
      * @param array $data The data (may be the one returned from the request)
      */
-    public function __construct(array $data)
+    public function __construct(array $data = [])
     {
         $this->size          = $data['size'] ?? null;
         $this->limit         = $data['limit'] ?? null;

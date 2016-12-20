@@ -2,7 +2,7 @@
 
 namespace Atlassian\Stash\Api\Mapper;
 
-use Atlassian\Stash\Api\PullRequest;
+use Atlassian\Stash\Api\Entity\PullRequest;
 
 class PullRequestMapper extends MapperAbstract
 {

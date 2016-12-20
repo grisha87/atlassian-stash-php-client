@@ -1,6 +1,6 @@
 <?php
 
-namespace Atlassian\Stash\Api;
+namespace Atlassian\Stash\Api\Entity;
 
 /**
  * API Project representation

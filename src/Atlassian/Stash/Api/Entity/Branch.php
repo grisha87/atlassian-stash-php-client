@@ -1,6 +1,6 @@
 <?php
 
-namespace Atlassian\Stash\Api;
+namespace Atlassian\Stash\Api\Entity;
 
 /**
  * Represents a single branch information from the repository

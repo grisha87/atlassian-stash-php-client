@@ -1,6 +1,6 @@
 <?php
 
-namespace Atlassian\Stash\Api;
+namespace Atlassian\Stash\Api\Entity;
 
 /**
  * Abstract entity class serving as a base for other entities
