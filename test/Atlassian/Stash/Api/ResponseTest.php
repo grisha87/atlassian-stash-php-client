@@ -3,7 +3,6 @@
 namespace Atlassian\Stash\Api;
 
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
 
 class ResponseTest extends TestCase
