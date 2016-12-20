@@ -70,5 +70,7 @@ class Request
         if (array_key_exists($name, $this->params)) {
             return $this->params[$name];
         }
+
+        return null;
     }
 }

@@ -52,6 +52,11 @@ class RequestTest extends TestCase
         $this->assertEquals($this->testData['payload']['start'], $this->request->getParam('start'));
     }
 
+    public function testGetParamsReturnsNullIfParamIsNotPresent()
+    {
+        $this->assertNull($this->request->getParam('non-existing'));
+    }
+
     public function testToStringReturnsUrlWithQuery()
     {
         $this->markTestSkipped("This has to be moved to the request sender tests...");
