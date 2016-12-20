@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 abstract class AbstractEntityTest extends TestCase
 {
     /**
-     * The example API response loaded from the JSON file via the loadExampleResponse()
+     * The example API response loaded from the JSON file via the loadExampleApiResponse()
      * method. Entity test cases are designed to use those example responses
      * to check their compliance and ability to handle the data provided within.
      *
@@ -25,7 +25,7 @@ abstract class AbstractEntityTest extends TestCase
      *
      * @return array
      */
-    protected function loadExampleResponse(string $string): array
+    protected function loadExampleApiResponse(string $string): array
     {
         $contents = file_get_contents(__DIR__ . '/../ExampleResponses/' . $string . '.json');
 

@@ -11,7 +11,7 @@ class ResultPageTest extends AbstractEntityTest
     {
         parent::setUp();
 
-        $this->exampleResponse = $this->loadExampleResponse('PageExample');
+        $this->exampleResponse = $this->loadExampleApiResponse('PageExample');
 
         $this->testPage = new ResultPage($this->exampleResponse);
     }
