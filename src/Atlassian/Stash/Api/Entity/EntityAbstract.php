@@ -6,6 +6,11 @@ namespace Atlassian\Stash\Api\Entity;
  * Abstract entity class serving as a base for other entities
  * that may be returned by the API.
  *
+ * In essence, all entities should reflect what the API may return to us
+ * and be merely a value representation with some simple logic helping
+ * out to quickly interpret the value. They never should carry out performing
+ * business logic.
+ *
  * Basically this class serves as a data container
  */
 abstract class EntityAbstract
