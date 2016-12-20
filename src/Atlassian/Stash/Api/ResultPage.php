@@ -29,6 +29,17 @@ class ResultPage
     protected $values;
 
     /**
+     * @param array $data The data (may be the one returned from the request)
+     */
+    public function __construct(array $data)
+    {
+        $this->size          = $data['size'] ?? null;
+        $this->limit         = $data['limit'] ?? null;
+        $this->nextPageStart = $data['nextPageStart'] ?? null;
+        $this->values        = $data['values'] ?? null;
+    }
+
+    /**
      * @param bool $isLastPage
      *
      * @return $this

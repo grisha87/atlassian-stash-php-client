@@ -75,7 +75,10 @@ abstract class ApiClient
                 $msg .= "Problem with '{$error['context']}': {$error['message']}\n";
             }
 
-            throw new RequestFailedException($msg, $excResponse->getStatusCode(), $clientException);
+            //throw new RequestFailedException($msg, $excResponse->getStatusCode(), $clientException);
+            echo "\n!!!!!" . $msg;
+
+            return new Response($excResponse);
         }
     }
 

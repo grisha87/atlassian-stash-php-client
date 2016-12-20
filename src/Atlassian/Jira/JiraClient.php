@@ -11,13 +11,19 @@ use Atlassian\Stash\Api\Request;
  */
 class JiraClient extends ApiClient
 {
+    protected $cache = [];
+
     /**
      * @param string $issueKey The issue KEY to download information
      *
-     * @return ResultPage
+     * @return array
      */
-    public function getTicketInformation(string $issueKey): ResultPage
+    public function getTicketInformation(string $issueKey): array
     {
+        if (array_key_exists($issueKey, $this->cache)) {
+            return $this->cache[$issueKey];
+        }
+
         $uri = sprintf(
             'rest/api/2/issue/%s',
             $issueKey
@@ -30,6 +36,12 @@ class JiraClient extends ApiClient
 
         $page = $this->sendRequest($request);
 
-        return $page->getPayload();
+        $payload = $page->getPayload();
+
+        if (!$payload) {
+            $payload = [];
+        }
+
+        return $this->cache[$issueKey] = $payload;
     }
 }

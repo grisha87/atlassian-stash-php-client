@@ -22,7 +22,7 @@ class Request
     protected $url;
 
     /** @var array The payload that will be sent with the request */
-    protected $payload;
+    protected $payload = [];
 
     /**
      * @param string $method  The HTTP method to use within the request
@@ -58,5 +58,17 @@ class Request
     public function getPayload(): array
     {
         return $this->params;
+    }
+
+    /**
+     * @param string $name The name of the parameter
+     *
+     * @return mixed The value of the parameter from the payload
+     */
+    public function getParam(string $name)
+    {
+        if (array_key_exists($name, $this->params)) {
+            return $this->params[$name];
+        }
     }
 }
