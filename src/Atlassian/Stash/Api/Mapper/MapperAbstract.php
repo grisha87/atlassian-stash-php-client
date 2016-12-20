@@ -12,8 +12,8 @@ abstract class MapperAbstract
     {
         $ret = [];
 
-        foreach ($data as $datum) {
-            $ret[] = $this->fromPhpData($datum);
+        foreach ($data as $key => $value) {
+            $ret[$key] = $this->fromPhpData($value);
         }
 
         return $ret;

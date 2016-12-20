@@ -102,7 +102,7 @@ abstract class EntityAbstract
         if ($definitions) {
             foreach ($definitions as $rel => $links) {
                 foreach ($links as $link) {
-                    $this->links[] = new Link($rel, $link['href']);
+                    $this->links[$rel] = new Link($link['href']);
                 }
             }
         }

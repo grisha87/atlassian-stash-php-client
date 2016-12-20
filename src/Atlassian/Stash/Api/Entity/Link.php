@@ -10,16 +10,11 @@ class Link
     /** @var string */
     protected $href;
 
-    /** @var string */
-    protected $rel;
-
     /**
-     * @param string $rel
      * @param string $href
      */
-    public function __construct($rel, $href)
+    public function __construct(string $href)
     {
-        $this->rel  = $rel;
         $this->href = $href;
     }
 
@@ -29,13 +24,5 @@ class Link
     public function getHref(): string
     {
         return $this->href;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRel(): string
-    {
-        return $this->rel;
     }
 }
