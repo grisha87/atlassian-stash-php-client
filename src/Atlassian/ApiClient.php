@@ -2,10 +2,7 @@
 
 namespace Atlassian;
 
-use Atlassian\Stash\Api\Mapper\ResultPageMapper;
-use Atlassian\Stash\Api\Exception\RequestFailedException;
 use Atlassian\Stash\Api\Response;
-use Atlassian\Stash\Api\ResultPage;
 use Atlassian\Stash\Api\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -66,19 +63,7 @@ abstract class ApiClient
 
             return new Response($guzzleResponse);
         } catch (ClientException $clientException) {
-            $excResponse = $clientException->getResponse();
-            $details = \GuzzleHttp\json_decode($excResponse->getBody()->getContents(), true);
-
-            $msg = '';
-
-            foreach ($details['errors'] as $error) {
-                $msg .= "Problem with '{$error['context']}': {$error['message']}\n";
-            }
-
-            //throw new RequestFailedException($msg, $excResponse->getStatusCode(), $clientException);
-            echo "\n!!!!!" . $msg;
-
-            return new Response($excResponse);
+            return new Response($clientException->getResponse());
         }
     }
 
