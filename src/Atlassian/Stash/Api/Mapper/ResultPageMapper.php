@@ -2,7 +2,7 @@
 
 namespace Atlassian\Stash\Api\Mapper;
 
-use Atlassian\Stash\Api\ResultPage;
+use Atlassian\Stash\Api\Entity\ResultPage;
 
 class ResultPageMapper
 {

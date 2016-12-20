@@ -1,10 +1,10 @@
 <?php
 
-namespace Atlassian\Stash\Api;
+namespace Atlassian\Stash\Api\Entity;
 
 use PHPUnit\Framework\TestCase;
 
-class PageTest extends TestCase
+class ResultPageTest extends TestCase
 {
     protected $testData = [
         'size'          => 3,

@@ -1,6 +1,6 @@
 <?php
 
-namespace Atlassian\Stash\Api;
+namespace Atlassian\Stash\Api\Entity;
 
 /**
  * Representation of a single paged API response

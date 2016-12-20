@@ -3,7 +3,7 @@
 namespace Atlassian\Jira;
 
 use Atlassian\ApiClient;
-use Atlassian\Stash\Api\ResultPage;
+use Atlassian\Stash\Api\Entity\ResultPage;
 use Atlassian\Stash\Api\Request;
 
 /**
