@@ -57,7 +57,7 @@ class Response
     /**
      * @return mixed The payload from the request
      */
-    public function getPayload()
+    public function getDecodedContents()
     {
         return $this->payload;
     }

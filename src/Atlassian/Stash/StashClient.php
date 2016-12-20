@@ -35,7 +35,7 @@ class StashClient extends ApiClient
 
         $response = $this->sendRequest($request);
 
-        return (new ProjectMapper())->allFromPhpData($response->getPayload()['values']);
+        return (new ProjectMapper())->allFromPhpData($response->getDecodedContents()['values']);
     }
 
     // @ToDo - Make a test...
@@ -62,7 +62,7 @@ class StashClient extends ApiClient
 
         $response = $this->sendRequest($request);
 
-        return (new ProjectMapper())->fromPhpData($response->getPayload());
+        return (new ProjectMapper())->fromPhpData($response->getDecodedContents());
     }
 
     public function createRepository(string $projectKey, array $params)
@@ -75,7 +75,7 @@ class StashClient extends ApiClient
 
         $response = $this->sendRequest($request);
 
-        return (new RepoMapper())->fromPhpData($response->getPayload());
+        return (new RepoMapper())->fromPhpData($response->getDecodedContents());
     }
 
     public function deleteRepository(string $projectKey, string $repoSlug)
@@ -104,7 +104,7 @@ class StashClient extends ApiClient
 
         $response = $this->sendRequest($request);
 
-        return (new RepoMapper())->allFromPhpData($response->getPayload()['values']);
+        return (new RepoMapper())->allFromPhpData($response->getDecodedContents()['values']);
     }
 
     /**
@@ -128,7 +128,7 @@ class StashClient extends ApiClient
 
         $response = $this->sendRequest($request);
 
-        return (new BranchMapper())->allFromPhpData($response->getPayload()['values']);
+        return (new BranchMapper())->allFromPhpData($response->getDecodedContents()['values']);
     }
 
     /**
@@ -157,7 +157,7 @@ class StashClient extends ApiClient
 
         $response = $this->sendRequest($request);
 
-        return (new PullRequestMapper())->allFromPhpData($response->getPayload()['values']);
+        return (new PullRequestMapper())->allFromPhpData($response->getDecodedContents()['values']);
     }
 
     public function getProjectRepositoryCompareCommits(

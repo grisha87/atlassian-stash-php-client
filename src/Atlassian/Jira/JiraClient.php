@@ -36,7 +36,7 @@ class JiraClient extends ApiClient
 
         $page = $this->sendRequest($request);
 
-        $payload = $page->getPayload();
+        $payload = $page->getDecodedContents();
 
         if (!$payload) {
             $payload = [];
