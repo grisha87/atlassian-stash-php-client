@@ -51,7 +51,7 @@ class ResponseTest extends TestCase
         $this->assertEquals(3, $data['limit']);
         $this->assertEquals(0, $data['start']);
         $this->assertEquals(3, $data['nextPageStart']);
-        $this->assertEquals(null, $data['filter']);
+        $this->assertEquals("something", $data['filter']);
 
         $values = $data['values'];
 

@@ -35,8 +35,11 @@ class ResultPage
     {
         $this->size          = $data['size'] ?? null;
         $this->limit         = $data['limit'] ?? null;
+        $this->start         = $data['start'] ?? null;
         $this->nextPageStart = $data['nextPageStart'] ?? null;
         $this->values        = $data['values'] ?? null;
+        $this->filter        = $data['filter'] ?? null;
+        $this->isLastPage    = $data['isLastPage'] ?? null;
     }
 
     /**

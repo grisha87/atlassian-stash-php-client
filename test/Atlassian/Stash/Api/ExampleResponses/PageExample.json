@@ -11,6 +11,6 @@
         }
     ],
     "start": 0,
-    "filter": null,
+    "filter": "something",
     "nextPageStart": 3
 }

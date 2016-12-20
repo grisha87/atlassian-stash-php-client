@@ -16,6 +16,17 @@ class ResultPageTest extends AbstractEntityTest
         $this->testPage = new ResultPage($this->exampleResponse);
     }
 
+    public function testAllTheParamsMakeSenseAfterConstruct()
+    {
+        $this->assertNotNull($this->testPage->getSize());
+        $this->assertNotNull($this->testPage->getStart());
+        $this->assertNotNull($this->testPage->getLimit());
+        $this->assertNotNull($this->testPage->getFilter());
+        $this->assertNotNull($this->testPage->isLastPage());
+        $this->assertNotNull($this->testPage->getValues());
+        $this->assertNotNull($this->testPage->getNextPageStart());
+    }
+
     public function testIAmAbleToGetSizeOfThePage()
     {
         $this->assertEquals($this->exampleResponse['size'], $this->testPage->getSize());
