@@ -2,24 +2,8 @@
 
 namespace Atlassian\Stash\Api\Entity;
 
-use PHPUnit\Framework\TestCase;
-
-class ResultPageTest extends TestCase
+class ResultPageTest extends AbstractEntityTest
 {
-    protected $testData = [
-        'size'          => 3,
-        'limit'         => 3,
-        'isLastPage'    => false,
-        'values'        => [
-            'a',
-            'b',
-            'c'
-        ],
-        'start'         => 0,
-        'filter'        => null,
-        'nextPageStart' => 3,
-    ];
-
     /** @var ResultPage */
     protected $testPage;
 
@@ -27,14 +11,14 @@ class ResultPageTest extends TestCase
     {
         parent::setUp();
 
-        $this->testData = $this->loadExampleResponse('PageExample');
+        $this->exampleResponse = $this->loadExampleResponse('PageExample');
 
-        $this->testPage = new ResultPage($this->testData);
+        $this->testPage = new ResultPage($this->exampleResponse);
     }
 
     public function testIAmAbleToGetSizeOfThePage()
     {
-        $this->assertEquals($this->testData['size'], $this->testPage->getSize());
+        $this->assertEquals($this->exampleResponse['size'], $this->testPage->getSize());
     }
 
     public function testIAmAbleToSetTheSizeOfThePage()
@@ -46,7 +30,7 @@ class ResultPageTest extends TestCase
 
     public function testIAmAbleToGetPageLimit()
     {
-        $this->assertEquals($this->testData['limit'], $this->testPage->getLimit());
+        $this->assertEquals($this->exampleResponse['limit'], $this->testPage->getLimit());
     }
 
     public function testIAmAbleToSetTheLimit()
@@ -58,7 +42,7 @@ class ResultPageTest extends TestCase
 
     public function testIAmAbleToCheckIfThisIsTheLastPage()
     {
-        $this->assertEquals($this->testData['isLastPage'], $this->testPage->isLastPage());
+        $this->assertEquals($this->exampleResponse['isLastPage'], $this->testPage->isLastPage());
     }
 
     public function testIAmAbleToSetLastPageMarker()
@@ -70,7 +54,7 @@ class ResultPageTest extends TestCase
 
     public function testIAmAbleToGetTheStartPoint()
     {
-        $this->assertEquals($this->testData['start'], $this->testPage->getStart());
+        $this->assertEquals($this->exampleResponse['start'], $this->testPage->getStart());
     }
 
     public function testIAmAbleToSetTheStartPoint()
@@ -82,7 +66,7 @@ class ResultPageTest extends TestCase
 
     public function testIAmAbleToGetTheFilter()
     {
-        $this->assertEquals($this->testData['filter'], $this->testPage->getFilter());
+        $this->assertEquals($this->exampleResponse['filter'], $this->testPage->getFilter());
     }
 
     public function testIAmAbleToSetTheFilter()
@@ -94,7 +78,7 @@ class ResultPageTest extends TestCase
 
     public function testIAmAbleToCheckWhereNextPageStarts()
     {
-        $this->assertEquals($this->testData['nextPageStart'], $this->testPage->getNextPageStart());
+        $this->assertEquals($this->exampleResponse['nextPageStart'], $this->testPage->getNextPageStart());
     }
 
     public function testIAmAbleToSetTheNextPageStart()
@@ -106,7 +90,7 @@ class ResultPageTest extends TestCase
 
     public function testIAmAbleToGetTheValues()
     {
-        $val = $this->testData['values'];
+        $val = $this->exampleResponse['values'];
 
         $this->assertEquals($val, $this->testPage->getValues());
         $this->assertNotEmpty($val);
@@ -117,12 +101,5 @@ class ResultPageTest extends TestCase
         $val = [1, 2, 3];
         $this->testPage->setValues($val);
         $this->assertEquals($val, $this->testPage->getValues());
-    }
-
-    protected function loadExampleResponse(string $string): array
-    {
-        $contents = file_get_contents(__DIR__ . '/../ExampleResponses/' . $string . '.json');
-
-        return \GuzzleHttp\json_decode($contents, true);
     }
 }

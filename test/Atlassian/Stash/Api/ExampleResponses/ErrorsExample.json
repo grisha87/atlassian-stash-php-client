@@ -1,14 +1,14 @@
 {
-  "errors": [
-    {
-      "context": "field_a",
-      "message": "A detailed validation error message for field_a.",
-      "exceptionName": null
-    },
-    {
-      "context": null,
-      "message": "A detailed error message.",
-      "exceptionName": null
-    }
-  ]
+    "errors": [
+        {
+            "context": "field_a",
+            "message": "A detailed validation error message for field_a.",
+            "exceptionName": null
+        },
+        {
+            "context": null,
+            "message": "A detailed error message.",
+            "exceptionName": null
+        }
+    ]
 }
